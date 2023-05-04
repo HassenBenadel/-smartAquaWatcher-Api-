@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,6 +20,9 @@ public class ServiceBarage implements IServiceBarage {
 
     @Autowired
     BarageRepository barageRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     @Override
@@ -33,6 +35,21 @@ public class ServiceBarage implements IServiceBarage {
 
 
         Map<String,Object> response = new HashMap<>();
+        response.put("Barage",barages);
+        response.put("value",HttpStatus.OK.value());
+        response.put("value",HttpStatus.OK.getReasonPhrase());
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getBarageByUser(Long idUser) {
+
+        User user = userRepository.findById(idUser).get();
+
+        Set<Barage> barages = user.getBarages();
+
+        Map<String,Object> response = new HashMap<>();
+
         response.put("Barage",barages);
         response.put("value",HttpStatus.OK.value());
         response.put("value",HttpStatus.OK.getReasonPhrase());

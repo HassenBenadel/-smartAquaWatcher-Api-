@@ -1,13 +1,12 @@
 package com.example.projectapi.Controller;
 
 import com.example.projectapi.Service.IServiceBarage;
-import com.example.projectapi.Service.IServiceGrandeur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 
 @RestController
 public class ControllerBarage {
@@ -18,6 +17,10 @@ public class ControllerBarage {
     @GetMapping("/GetAllBarage")
     public ResponseEntity<Object> getGrandeur(){
         return iServiceBarage.getAllBarage();
+    }
+    @GetMapping("/GetBaragebyUser{idUser}")
+    public ResponseEntity<Object> getGrandeur(@PathVariable("idUser") Long idUser){
+        return iServiceBarage.getBarageByUser(idUser);
     }
 
 

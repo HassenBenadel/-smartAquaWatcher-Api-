@@ -3,7 +3,6 @@ package com.example.projectapi.Controller;
 import com.example.projectapi.Entity.User;
 import com.example.projectapi.Service.IServiceUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +60,12 @@ public class ControllerUser {
     @GetMapping("/GetuserByEmail={email}")
     public  ResponseEntity<Object> getuserbyEmail(@PathVariable("email") String email){
         return ise.getUser(email);
+    }
+
+
+    @GetMapping("/GetuserByidUser={idUser}")
+    public  ResponseEntity<Object> getuserbyId(@PathVariable("idUser") Long idUser){
+        return ise.getUserbyId(idUser);
     }
 
     @DeleteMapping("/deleteUser/Email={email}")

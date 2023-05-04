@@ -3,7 +3,6 @@ package com.example.projectapi.Service;
 import com.example.projectapi.Entity.User;
 import com.example.projectapi.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -169,12 +168,12 @@ public class ServiceUser implements IServiceUser {
 
         List<Map<String,Object>> finallistusers =new ArrayList<>();
 
-        List<User> list_user = new ArrayList<>();
+        //List<User> list_user = new ArrayList<>();
 
 
         for (User u : users)
         {
-            if(u.getApproval()==true){
+            if(u.getApproval()){
                 Map<String,Object> userMap = new HashMap<>();
                 userMap.put("value",u);
                 finallistusers.add(userMap);
@@ -192,12 +191,12 @@ public class ServiceUser implements IServiceUser {
 
         List<Map<String,Object>> finallistusers =new ArrayList<>();
 
-        List<User> list_user = new ArrayList<>();
+        //List<User> list_user = new ArrayList<>();
 
 
         for (User u : users)
         {
-            if(u.getApproval()==false){
+            if(!u.getApproval()){
                 Map<String,Object> userMap = new HashMap<>();
                 userMap.put("value",u);
                 finallistusers.add(userMap);
@@ -220,6 +219,17 @@ public class ServiceUser implements IServiceUser {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 
 
+    }
+
+    @Override
+    public ResponseEntity<Object> getUserbyId(Long idUser) {
+        User user = userRepository.findById(idUser).get();
+        Map<String,Object> response = new HashMap<>();
+        response.put("user",user);
+        response.put("value",HttpStatus.OK.value());
+        response.put("status",HttpStatus.OK.getReasonPhrase());
+
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
     }
 
     @Override
