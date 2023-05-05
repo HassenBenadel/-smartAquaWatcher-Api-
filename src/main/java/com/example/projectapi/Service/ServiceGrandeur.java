@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceGrandeur implements IServiceGrandeur{
@@ -52,6 +53,24 @@ public class ServiceGrandeur implements IServiceGrandeur{
     }
 
     @Override
+    public ResponseEntity<Object> getLast5Temperature() {
+        List<Grandeur> list_grandeur=grandeurRepository.findAllByOrderByIdDesc().stream().limit(5).collect(Collectors.toList());
+
+        List<Map<String,Object>> Temperatures = new ArrayList<>();
+
+        for(Grandeur g : list_grandeur){
+            Map<String,Object> tempMap = new HashMap<>();
+            tempMap.put("value",g.getTemp());
+            tempMap.put("heure",g.getHeure());
+            Temperatures.add(tempMap);
+        }
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("values",Temperatures);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
     public ResponseEntity<Object> getAllPh() {
         List<Grandeur> list_grandeur=grandeurRepository.findAll();
 
@@ -70,9 +89,45 @@ public class ServiceGrandeur implements IServiceGrandeur{
     }
 
     @Override
+    public ResponseEntity<Object> getLast5Ph() {
+        List<Grandeur> list_grandeur=grandeurRepository.findAllByOrderByIdDesc().stream().limit(5).collect(Collectors.toList());
+
+        List<Map<String,Object>> Ph = new ArrayList<>();
+
+        for(Grandeur g : list_grandeur){
+            Map<String,Object> tempMap = new HashMap<>();
+            tempMap.put("value",g.getPh());
+            tempMap.put("heure",g.getHeure());
+            Ph.add(tempMap);
+        }
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("values",Ph);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
     public ResponseEntity<Object> getAllHumidity() {
         List<Grandeur> list_grandeur=grandeurRepository.findAll();
 
+        List<Map<String,Object>> humidities = new ArrayList<>();
+
+        for(Grandeur g : list_grandeur){
+            Map<String,Object> tempMap = new HashMap<>();
+            tempMap.put("value",g.getHumidite());
+            tempMap.put("heure",g.getHeure());
+            humidities.add(tempMap);
+        }
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("values",humidities);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getLast5Humidity() {
+
+        List<Grandeur> list_grandeur=grandeurRepository.findAllByOrderByIdDesc().stream().limit(5).collect(Collectors.toList());
         List<Map<String,Object>> humidities = new ArrayList<>();
 
         for(Grandeur g : list_grandeur){
@@ -103,4 +158,22 @@ public class ServiceGrandeur implements IServiceGrandeur{
         Map<String,Object> response = new HashMap<>();
         response.put("values",turbidities);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);    }
+
+    @Override
+    public ResponseEntity<Object> getLast5Turbidity() {
+        List<Grandeur> list_grandeur=grandeurRepository.findAllByOrderByIdDesc().stream().limit(5).collect(Collectors.toList());
+
+        List<Map<String,Object>> turbidities = new ArrayList<>();
+
+        for(Grandeur g : list_grandeur){
+            Map<String,Object> tempMap = new HashMap<>();
+            tempMap.put("value",g.getTurbidite());
+            tempMap.put("heure",g.getHeure());
+            turbidities.add(tempMap);
+        }
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("values",turbidities);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
 }

@@ -21,19 +21,36 @@ public class ControllerGrandeur {
     public  ResponseEntity<Object> getTemperature(){
         return iServiceGrandeur.getAllTemperature();
     }
+
+    @GetMapping("/GetLast5Temperature")
+    public  ResponseEntity<Object> getLast5Temperature(){
+        return iServiceGrandeur.getLast5Temperature();
+    }
     @GetMapping("/GetAllHumidity")
     public  ResponseEntity<Object> getHumidity(){
         return iServiceGrandeur.getAllHumidity();
     }
+    @GetMapping("/GetLast5Humidity")
+    public  ResponseEntity<Object> getLast5Humidity(){
+        return iServiceGrandeur.getLast5Humidity();
+    }
     @GetMapping("/GetAllPh")
     public  ResponseEntity<Object> getPh(){
         return iServiceGrandeur.getAllPh();
+    }
+    @GetMapping("/GetLast5Ph")
+    public  ResponseEntity<Object> getLast5Ph(){
+        return iServiceGrandeur.getLast5Ph();
     }
     @GetMapping("/GetAllTurbidity")
     public  ResponseEntity<Object> getTurbidity(){
         return iServiceGrandeur.getAllTurbidity();
     }
 
+    @GetMapping("/GetLast5Turbidity")
+    public  ResponseEntity<Object> getLast5Turbidity(){
+        return iServiceGrandeur.getLast5Turbidity();
+    }
     @GetMapping("/GetGrandeur")
     public Map<String, Object> getGrandeur(){
         return iServiceGrandeur.getGrandeur();
