@@ -56,6 +56,11 @@ public class ControllerGrandeur {
         return iServiceGrandeur.getGrandeur();
     }
 
+    @GetMapping("/GetGrandeurbyNode{idNode}")
+    public ResponseEntity<Object> getGrandeur(@PathVariable("idNode") Long idNoeud){
+        return iServiceGrandeur.getGrandeurByNode(idNoeud);
+    }
+
 
 
 

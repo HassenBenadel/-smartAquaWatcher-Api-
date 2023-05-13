@@ -36,10 +36,4 @@ public class Grandeur implements Serializable {
     @JsonIgnore
     private Noeud noeud;
 
-
-
-
-
-
-
 }

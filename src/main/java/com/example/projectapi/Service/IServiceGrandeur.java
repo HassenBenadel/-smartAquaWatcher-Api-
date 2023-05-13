@@ -14,13 +14,16 @@ public interface IServiceGrandeur {
 
     ResponseEntity<Object>  getAllPh();
     ResponseEntity<Object>  getLast5Ph();
-
     ResponseEntity<Object>  getAllHumidity();
     ResponseEntity<Object>  getLast5Humidity();
-
-
     ResponseEntity<Object>  getAllTurbidity();
     ResponseEntity<Object>  getLast5Turbidity();
+    ResponseEntity<Object>  getGrandeurByNode(Long idNode);
+
+
+
+
+
 
 
 }

@@ -35,14 +35,24 @@ public class ServiceNode implements IServiceNode {
     if(nodes.isEmpty()){
         Map<String,Object> response = new HashMap<>();
         response.put("value",HttpStatus.NOT_FOUND.value());
-        response.put("value",HttpStatus.NOT_FOUND.getReasonPhrase());
+        response.put("status",HttpStatus.NOT_FOUND.getReasonPhrase());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);
     }else {
         Map<String,Object> response = new HashMap<>();
         response.put("Node",nodes);
         response.put("value",HttpStatus.OK.value());
-        response.put("value",HttpStatus.OK.getReasonPhrase());
+        response.put("status",HttpStatus.OK.getReasonPhrase());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
     }
 }
+
+    @Override
+    public ResponseEntity<Object> getNumNodeByBarrage(Long idBarage) {
+        Long numNode = barageRepository.findById(idBarage).get().getNoeuds().stream().count();
+        Map<String,Object> response = new HashMap<>();
+        response.put("numnode",numNode);
+        response.put("value",HttpStatus.OK.value());
+        response.put("status",HttpStatus.OK.getReasonPhrase());
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
 }
