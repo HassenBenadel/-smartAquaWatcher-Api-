@@ -39,7 +39,6 @@ public class ControllerUser {
         return ise.updatePassword(email, password);
     }
 
-
     @PutMapping("SetApproval/Email={email}")
     public ResponseEntity<Object> ApproveUser(@PathVariable("email") String email) {
         return  ise.ApproveUser(email);

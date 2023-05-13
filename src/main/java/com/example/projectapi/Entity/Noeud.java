@@ -28,7 +28,4 @@ public class Noeud implements Serializable {
     @ManyToOne
     Barage barage;
 
-
-
-
 }

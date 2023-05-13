@@ -1,17 +1,19 @@
 package com.example.projectapi.Service;
 
+import com.example.projectapi.Entity.Barage;
 import com.example.projectapi.Entity.Grandeur;
+import com.example.projectapi.Entity.Noeud;
+import com.example.projectapi.Repository.BarageRepository;
 import com.example.projectapi.Repository.GrandeurRepository;
+import com.example.projectapi.Repository.NodeRepository;
+import com.example.projectapi.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +21,12 @@ public class ServiceGrandeur implements IServiceGrandeur{
 
     @Autowired
     GrandeurRepository grandeurRepository;
+
+    @Autowired
+    BarageRepository barageRepository;
+
+    @Autowired
+    NodeRepository nodeRepository;
 
 
 
@@ -176,4 +184,30 @@ public class ServiceGrandeur implements IServiceGrandeur{
         response.put("values",turbidities);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
     }
+
+    @Override
+    public ResponseEntity<Object> getGrandeurByNode(Long idNode) {
+
+        Noeud node = nodeRepository.findById(idNode).get();
+        Grandeur g= node.getGrandeurs().stream().max(Comparator.comparing(Grandeur::getId)).orElse(null);
+
+        Map<String,Object> grandeur = new HashMap<>();
+
+        if(g!=null){
+           grandeur.put("grandeur",g);
+           grandeur.put("status", HttpStatus.OK);
+           grandeur.put("value",HttpStatus.OK.value());
+           return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(grandeur);
+       }else{
+            grandeur.put("status", HttpStatus.NOT_FOUND);
+            grandeur.put("value",HttpStatus.NOT_FOUND.value());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(grandeur);
+
+        }
+
+
+
+    }
+
+
 }
