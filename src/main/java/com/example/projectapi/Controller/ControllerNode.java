@@ -20,8 +20,10 @@ public class ControllerNode {
         return iServiceNode.getNodesByBarage(idBarage);
     }
 
-
-
+    @GetMapping("/GetNumNode{idBarage}")
+    public ResponseEntity<Object> getNumNode(@PathVariable("idBarage") Long idBarage){
+        return iServiceNode.getNumNodeByBarrage(idBarage);
+    }
 
 
 
