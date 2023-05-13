@@ -139,7 +139,7 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
-    public Map<String, Object> updatePassword(String email,String password) {
+    public Map<String, Object> modiferprofil(String email,String password,String login , String tel) {
         Map<String,Object> changed= new HashMap<>();
 
 
@@ -148,6 +148,9 @@ public class ServiceUser implements IServiceUser {
         if(!Objects.isNull(user))
         {
             user.setPassword(password);
+            user.setLogin(login);
+            user.setPhoneNumber(tel);
+            user.setEmail(email);
             userRepository.save(user);
             changed.put("status",HttpStatus.OK);
             changed.put("value",HttpStatus.OK.value());

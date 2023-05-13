@@ -34,9 +34,9 @@ public class ControllerUser {
         return ise.verifyCode(email, code);
     }
 
-    @PutMapping("updatePassword/Email={email}/password={password}")
-    public Map<String,Object> updatePassword(@PathVariable("email") String email,@PathVariable("password") String password) {
-        return ise.updatePassword(email, password);
+    @PutMapping("modiferprofil/Email={email}/password={password}/login={login}/tel={tel}")
+    public Map<String,Object> modiferprofil(@PathVariable("email") String email,@PathVariable("password") String password,@PathVariable("login") String login,@PathVariable("tel") String tel) {
+        return ise.modiferprofil(email, password,login,tel);
     }
 
 
