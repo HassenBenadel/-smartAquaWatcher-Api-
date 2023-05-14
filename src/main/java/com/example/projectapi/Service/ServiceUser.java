@@ -176,7 +176,7 @@ public class ServiceUser implements IServiceUser {
 
         for (User u : users)
         {
-            if(u.getApproval()){
+            if( (u.getApproval())  && (u.getType()==0) ){
                 Map<String,Object> userMap = new HashMap<>();
                 userMap.put("value",u);
                 finallistusers.add(userMap);
@@ -199,7 +199,7 @@ public class ServiceUser implements IServiceUser {
 
         for (User u : users)
         {
-            if(!u.getApproval()){
+            if((!u.getApproval()) && (u.getType()==0)){
                 Map<String,Object> userMap = new HashMap<>();
                 userMap.put("value",u);
                 finallistusers.add(userMap);
@@ -236,8 +236,8 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
-    public ResponseEntity<Object> ApproveUser(String email) {
-        User user = userRepository.findByEmail(email);
+    public ResponseEntity<Object> ApproveUser(Long id) {
+        User user = userRepository.findById(id).get();
         Map<String,Object> response = new HashMap<>();
 
         if(!Objects.isNull(user)){
@@ -257,11 +257,11 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
-    public ResponseEntity<Object> DeleteUser(String email) {
+    public ResponseEntity<Object> DeleteUser(Long id) {
 
         Map<String,Object> response = new HashMap<>();
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findById(id).get();
         if(!Objects.isNull(user)){
 
             userRepository.delete(user);

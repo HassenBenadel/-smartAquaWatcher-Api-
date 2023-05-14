@@ -21,9 +21,9 @@ public interface IServiceUser {
      ResponseEntity<Object> getUser(String email);
      ResponseEntity<Object> getUserbyId(Long idUser);
 
-     ResponseEntity<Object> ApproveUser(String email);
+     ResponseEntity<Object> ApproveUser(Long id);
 
-     ResponseEntity<Object> DeleteUser(String email);
+     ResponseEntity<Object> DeleteUser(Long id);
 
 
 

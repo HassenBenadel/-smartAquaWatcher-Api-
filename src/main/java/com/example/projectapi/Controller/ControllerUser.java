@@ -39,9 +39,9 @@ public class ControllerUser {
         return ise.modiferprofil(email, password,login,tel);
     }
 
-    @PutMapping("SetApproval/Email={email}")
-    public ResponseEntity<Object> ApproveUser(@PathVariable("email") String email) {
-        return  ise.ApproveUser(email);
+    @PutMapping("SetApproval/id={id}")
+    public ResponseEntity<Object> ApproveUser(@PathVariable("id") Long id) {
+        return  ise.ApproveUser(id);
     }
 
     @GetMapping("/GetApprovedUser")
@@ -67,9 +67,9 @@ public class ControllerUser {
         return ise.getUserbyId(idUser);
     }
 
-    @DeleteMapping("/deleteUser/Email={email}")
-    public  ResponseEntity<Object> DeleteUserByEmail(@PathVariable("email") String email){
-        return ise.DeleteUser(email);
+    @DeleteMapping("/deleteUser/Id={id}")
+    public  ResponseEntity<Object> DeleteUserById(@PathVariable("id") Long id){
+        return ise.DeleteUser(id);
     }
 
 
