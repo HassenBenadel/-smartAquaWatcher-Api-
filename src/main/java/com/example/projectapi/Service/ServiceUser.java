@@ -139,11 +139,11 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
-    public Map<String, Object> modiferprofil(String email,String password,String login , String tel) {
+    public Map<String, Object> modiferprofil(String email,String password,String login , String tel,Long id) {
         Map<String,Object> changed= new HashMap<>();
 
 
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByid(id);
 
         if(!Objects.isNull(user))
         {
