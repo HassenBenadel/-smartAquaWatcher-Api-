@@ -196,7 +196,6 @@ public class ServiceUser implements IServiceUser {
 
         //List<User> list_user = new ArrayList<>();
 
-
         for (User u : users)
         {
             if((!u.getApproval()) && (u.getType()==0)){
