@@ -10,4 +10,5 @@ import javax.jws.soap.SOAPBinding;
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByLogin(String login);
     User findByEmail(String email);
+    User findByid(Long id);
 }

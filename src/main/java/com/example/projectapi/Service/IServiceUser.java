@@ -12,7 +12,7 @@ public interface IServiceUser {
      void sendEmail(String to , String subject , String body);
      Map<String,Object> sendCode(String email );
      Map<String, Object> verifyCode(String email , Integer code );
-     Map<String, Object> modiferprofil(String email,String password,String login,String tel);
+     Map<String, Object> modiferprofil(String email,String password,String login,String tel,Long id);
 
      ResponseEntity<Object> getApprovedUser();
 
