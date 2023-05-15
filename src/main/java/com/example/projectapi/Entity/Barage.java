@@ -33,13 +33,4 @@ public class Barage implements Serializable {
     @JsonIgnore
     private Set<Noeud> noeuds;
 
-
-
-
-
-
-
-
-
-
 }

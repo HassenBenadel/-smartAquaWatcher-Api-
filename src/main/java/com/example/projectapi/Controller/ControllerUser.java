@@ -33,8 +33,10 @@ public class ControllerUser {
     public Map<String,Object> verifyCode(@PathVariable("email") String email,@PathVariable("code") Integer code) {
         return ise.verifyCode(email, code);
     }
-
-    @PutMapping("modiferprofil/Email={email}/password={password}/login={login}/tel={tel}/id={id}")
+    @PutMapping("updatePassword/Email={email}/password={password}")
+    public Map<String,Object> modiferprofil(@PathVariable("email") String email,@PathVariable("password") String password) {
+        return ise.ChangePassword(email, password);
+    } @PutMapping("modiferprofil/Email={email}/password={password}/login={login}/tel={tel}/id={id}")
     public Map<String,Object> modiferprofil(@PathVariable("email") String email,@PathVariable("password") String password,@PathVariable("login") String login,@PathVariable("tel") String tel,@PathVariable("id") long id) {
         return ise.modiferprofil(email, password,login,tel,id);
     }

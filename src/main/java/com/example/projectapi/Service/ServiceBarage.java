@@ -55,4 +55,27 @@ public class ServiceBarage implements IServiceBarage {
         response.put("value",HttpStatus.OK.getReasonPhrase());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
     }
+
+    @Override
+    public ResponseEntity<Object> getAllUnaffectedBarage() {
+
+        Map<String,Object> response = new HashMap<>();
+
+        List<Barage> barages = barageRepository.findBaragesWithNoUsers();
+        if(barages.size()>0){
+            response.put("barages",barages);
+            response.put("value",HttpStatus.OK.value());
+            response.put("status",HttpStatus.OK.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+        }else if(barages.size()==0){
+            response.put("barages",barages);
+            response.put("value",HttpStatus.NOT_FOUND.value());
+            response.put("status",HttpStatus.NOT_FOUND.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+
+    }
+
 }

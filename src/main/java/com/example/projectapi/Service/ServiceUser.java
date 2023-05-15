@@ -1,6 +1,8 @@
 package com.example.projectapi.Service;
 
+import com.example.projectapi.Entity.Barage;
 import com.example.projectapi.Entity.User;
+import com.example.projectapi.Repository.BarageRepository;
 import com.example.projectapi.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ServiceUser implements IServiceUser {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    BarageRepository barageRepository;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -84,7 +89,6 @@ public class ServiceUser implements IServiceUser {
             verify.put("status",HttpStatus.NOT_FOUND);
             verify.put("value",HttpStatus.NOT_FOUND.value());
             verify.put("user",account);
-
         }
         else
         {
@@ -93,6 +97,10 @@ public class ServiceUser implements IServiceUser {
             {
                 verify.put("status",HttpStatus.OK);
                 verify.put("value",HttpStatus.OK.value());
+                verify.put("user",account);
+            }else {
+                verify.put("status",HttpStatus.NOT_FOUND);
+                verify.put("value",HttpStatus.NOT_FOUND.value());
                 verify.put("user",account);
             }
         }
@@ -168,6 +176,24 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
+    public Map<String, Object> ChangePassword(String email, String password) {
+
+        Map<String,Object> changed= new HashMap<>();
+
+        User user = userRepository.findByEmail(email);
+        if(!Objects.isNull(user)){
+            user.setPassword(encryptPassword(password));
+            userRepository.save(user);
+            changed.put("status",HttpStatus.OK);
+            changed.put("value",HttpStatus.OK.value());
+        }else{
+            changed.put("status",HttpStatus.NOT_MODIFIED);
+            changed.put("value",HttpStatus.NOT_MODIFIED.value());
+        }
+        return changed;
+    }
+
+    @Override
     public Map<String, Object> modiferprofil(String email,String password,String login , String tel,Long id) {
         Map<String,Object> changed= new HashMap<>();
 
@@ -176,7 +202,7 @@ public class ServiceUser implements IServiceUser {
 
         if(!Objects.isNull(user))
         {
-            user.setPassword(password);
+            user.setPassword(encryptPassword(password));
             user.setLogin(login);
             user.setPhoneNumber(tel);
             user.setEmail(email);
@@ -306,11 +332,27 @@ public class ServiceUser implements IServiceUser {
 
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
 
-
-
-
-
     }
 
+    @Override
+    public ResponseEntity<Object> affectBarrageToUser(Long idBarage, Long idUser) {
+
+        Map<String,Object> response = new HashMap<>();
+
+        Barage barage = barageRepository.findById(idBarage).get();
+        User user = userRepository.findById(idUser).get();
+
+        Set<Barage> barages = user.getBarages();
+        barages.add(barage);
+        user.setBarages(barages);
+
+        userRepository.save(user);
+
+        response.put("value",HttpStatus.OK.value());
+        response.put("status",HttpStatus.OK.getReasonPhrase());
+
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+
+    }
 
 }

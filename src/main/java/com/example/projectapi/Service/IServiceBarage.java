@@ -7,5 +7,6 @@ public interface IServiceBarage {
 
     ResponseEntity<Object>  getAllBarage();
     ResponseEntity<Object>  getBarageByUser(Long idUser);
+    ResponseEntity<Object>  getAllUnaffectedBarage();
 
 }
