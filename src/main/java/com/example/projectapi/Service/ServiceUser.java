@@ -11,6 +11,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @Service
@@ -37,11 +40,36 @@ public class ServiceUser implements IServiceUser {
             return created;
         }
     }
-    userRepository.save(user);
+        String encryptedPassword = encryptPassword(user.getPassword());
+
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
     created.put("created",true);
     created.put("status",HttpStatus.CREATED);
     created.put("value",HttpStatus.CREATED.value());
     return created;
+    }
+
+    private String encryptPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : encodedHash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            // Handle exception or rethrow
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -60,7 +88,8 @@ public class ServiceUser implements IServiceUser {
         }
         else
         {
-            if(account.getPassword().equals(password))
+            String encryptedPassword = encryptPassword(password);
+            if(encryptedPassword.equals(account.getPassword()))
             {
                 verify.put("status",HttpStatus.OK);
                 verify.put("value",HttpStatus.OK.value());
