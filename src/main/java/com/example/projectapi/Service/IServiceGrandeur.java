@@ -11,6 +11,10 @@ public interface IServiceGrandeur {
     ResponseEntity<Object>  getAllTemperature();
 
     ResponseEntity<Object>  getLast5Temperature();
+    ResponseEntity<Object>  getLast5TemperaturebyNode(Long idNode);
+    ResponseEntity<Object>  getLast5HumiditybyNode(Long idNode);
+    ResponseEntity<Object>  getLast5TurbiditybyNode(Long idNode);
+    ResponseEntity<Object>  getLast5PhbyNode(Long idNode);
 
     ResponseEntity<Object>  getAllPh();
     ResponseEntity<Object>  getLast5Ph();

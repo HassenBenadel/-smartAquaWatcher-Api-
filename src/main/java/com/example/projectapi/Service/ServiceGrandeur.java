@@ -29,9 +29,6 @@ public class ServiceGrandeur implements IServiceGrandeur{
     NodeRepository nodeRepository;
 
 
-
-
-
     @Override
     public Map<String, Object> getGrandeur() {
         Map<String,Object> grandeur = new HashMap<>();
@@ -76,6 +73,121 @@ public class ServiceGrandeur implements IServiceGrandeur{
         Map<String,Object> response = new HashMap<>();
         response.put("values",Temperatures);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getLast5TemperaturebyNode(Long idNode) {
+
+        Noeud node = nodeRepository.findById(idNode).get();
+        List<Grandeur> grandeurnode = node.getGrandeurs().stream().collect(Collectors.toList());
+        List<Map<String,Object>> temp = new ArrayList<>();
+        Map<String,Object> response = new HashMap<>();
+
+        if(grandeurnode.size()!=0){
+
+        List<Grandeur> sortedGrandeurs = grandeurnode.stream().limit(5)
+                .sorted(Comparator.comparing(Grandeur::getHeure).reversed())
+                .collect(Collectors.toList());
+
+        // Loop through sorted list and add values to temp
+        for(Grandeur g : sortedGrandeurs){
+            Map<String,Object> tempMap = new HashMap<>();
+            tempMap.put("value",g.getTemp());
+            tempMap.put("heure",g.getHeure());
+            temp.add(tempMap);
+        }
+            response.put("temperature",temp);
+            response.put("value",HttpStatus.OK);
+            response.put("status",HttpStatus.OK.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getLast5HumiditybyNode(Long idNode) {
+        Noeud node = nodeRepository.findById(idNode).get();
+        Set<Grandeur> grandeurnode = node.getGrandeurs();
+        List<Map<String,Object>> humidities = new ArrayList<>();
+        Map<String,Object> response = new HashMap<>();
+
+
+        if(grandeurnode.size()!=0){
+
+            List<Grandeur> sortedGrandeurs = grandeurnode.stream().limit(5)
+                    .sorted(Comparator.comparing(Grandeur::getHeure,Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+
+            // Loop through sorted list and add values to temp
+            for(Grandeur g : sortedGrandeurs){
+                Map<String,Object> tempMap = new HashMap<>();
+                tempMap.put("value",g.getHumidite());
+                tempMap.put("heure",g.getHeure());
+                humidities.add(tempMap);
+            }
+            response.put("humidity",humidities);
+            response.put("value",HttpStatus.OK);
+            response.put("status",HttpStatus.OK.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);    }
+
+    @Override
+    public ResponseEntity<Object> getLast5TurbiditybyNode(Long idNode) {
+        Noeud node = nodeRepository.findById(idNode).get();
+        Set<Grandeur> grandeurnode = node.getGrandeurs();
+        List<Map<String,Object>> turbidities = new ArrayList<>();
+        Map<String,Object> response = new HashMap<>();
+
+        if(grandeurnode.size()!=0){
+
+            List<Grandeur> sortedGrandeurs = grandeurnode.stream().limit(5)
+                    .sorted(Comparator.comparing(Grandeur::getHeure,Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+
+            // Loop through sorted list and add values to temp
+            for(Grandeur g : sortedGrandeurs){
+                Map<String,Object> tempMap = new HashMap<>();
+                tempMap.put("value",g.getTurbidite());
+                tempMap.put("heure",g.getHeure());
+                turbidities.add(tempMap);
+            }
+            response.put("turbidity",turbidities);
+            response.put("value",HttpStatus.OK);
+            response.put("status",HttpStatus.OK.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> getLast5PhbyNode(Long idNode) {
+
+        Noeud node = nodeRepository.findById(idNode).get();
+        Set<Grandeur> grandeurnode = node.getGrandeurs();
+        List<Map<String,Object>> phlist = new ArrayList<>();
+        Map<String,Object> response = new HashMap<>();
+
+
+        if(grandeurnode.size()!=0){
+
+            List<Grandeur> sortedGrandeurs = grandeurnode.stream().limit(5)
+                    .sorted(Comparator.comparing(Grandeur::getHeure,Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+
+            // Loop through sorted list and add values to temp
+            for(Grandeur g : sortedGrandeurs){
+                Map<String,Object> tempMap = new HashMap<>();
+                tempMap.put("value",g.getPh());
+                tempMap.put("heure",g.getHeure());
+                phlist.add(tempMap);
+            }
+            response.put("ph",phlist);
+            response.put("value",HttpStatus.OK);
+            response.put("status",HttpStatus.OK.getReasonPhrase());
+            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);
     }
 
     @Override

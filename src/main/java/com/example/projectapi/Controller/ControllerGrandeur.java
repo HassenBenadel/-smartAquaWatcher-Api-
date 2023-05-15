@@ -21,10 +21,26 @@ public class ControllerGrandeur {
     public  ResponseEntity<Object> getTemperature(){
         return iServiceGrandeur.getAllTemperature();
     }
-
     @GetMapping("/GetLast5Temperature")
     public  ResponseEntity<Object> getLast5Temperature(){
         return iServiceGrandeur.getLast5Temperature();
+    }
+
+    @GetMapping("/GetLast5TemperaturebyNode={id}")
+    public  ResponseEntity<Object> getLast5TemperaturebyIdNode(@PathVariable("id") Long idNode){
+        return iServiceGrandeur.getLast5TemperaturebyNode(idNode);
+    }
+    @GetMapping("/GetLast5HumiditybyNode={id}")
+    public  ResponseEntity<Object> getLast5HumiditybyIdNode(@PathVariable("id") Long idNode){
+        return iServiceGrandeur.getLast5HumiditybyNode(idNode);
+    }
+    @GetMapping("/GetLast5TurbiditybyNode={id}")
+    public  ResponseEntity<Object> getLast5TurbiditybyIdNode(@PathVariable("id") Long idNode){
+        return iServiceGrandeur.getLast5TurbiditybyNode(idNode);
+    }
+    @GetMapping("/GetLast5PhbyNode={id}")
+    public  ResponseEntity<Object> getLast5PhbyIdNode(@PathVariable("id") Long idNode){
+        return iServiceGrandeur.getLast5PhbyNode(idNode);
     }
     @GetMapping("/GetAllHumidity")
     public  ResponseEntity<Object> getHumidity(){
