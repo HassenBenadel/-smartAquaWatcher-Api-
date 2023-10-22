@@ -5,6 +5,7 @@ import com.example.projectapi.Entity.User;
 import com.example.projectapi.Repository.BarageRepository;
 import com.example.projectapi.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +31,6 @@ public class ServiceUser implements IServiceUser {
 
     @Autowired
     private JavaMailSender javaMailSender;
-
 
     @Override
     public Map<String,Object> createUser(User user) {
