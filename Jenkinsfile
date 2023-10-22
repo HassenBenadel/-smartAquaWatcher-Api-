@@ -11,9 +11,11 @@ pipeline {
 
         stage('Nettoyage Maven') {
             steps {
-                // Étape de nettoyage du projet
+           // Étape de nettoyage du projet
                 sh "mvn clean"
 
+            // Étape de compilation du projet
+                sh "mvn compile"
                 
             }
         }
